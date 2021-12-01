@@ -100,7 +100,7 @@ namespace AIMP.Smartoteka
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkVisited = true;
-            this.linkLabel1.Location = new System.Drawing.Point(471, 233);
+            this.linkLabel1.Location = new System.Drawing.Point(231, 233);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(215, 13);
             this.linkLabel1.TabIndex = 3;
