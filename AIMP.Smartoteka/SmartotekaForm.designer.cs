@@ -54,6 +54,7 @@
             this.editSaveBtn = new System.Windows.Forms.Button();
             this.editGroupBox1 = new System.Windows.Forms.GroupBox();
             this._editMultiTagList = new AIMP.Smartoteka.MultiTagList();
+            this.duplicateBtn = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -62,6 +63,7 @@
             this.popularGroupBox1 = new System.Windows.Forms.GroupBox();
             this.button15 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnLoadTagsFromFiles = new System.Windows.Forms.Button();
             this.btnLoadTagsToFiles = new System.Windows.Forms.Button();
@@ -71,8 +73,6 @@
             this.filterTitleTagList1 = new AIMP.Smartoteka.TagList();
             this._filterMultiTagList = new AIMP.Smartoteka.MultiTagList();
             this.playedListComboBox = new System.Windows.Forms.ComboBox();
-            this.duplicateBtn = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
             this.playingRecordContextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.найтиВТаблицеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridContextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -80,6 +80,7 @@
             this.запуститьВебсерверToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.webServerLinkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.playTrackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.soundTrackBar)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -89,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.playingRecordContextMenuStrip1.SuspendLayout();
             this.gridContextMenuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // playBtn
@@ -153,7 +155,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 765);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 663);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1324, 22);
             this.statusStrip1.TabIndex = 13;
@@ -179,8 +181,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.optionsToolStripMenuItem.Text = "Настройки";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -188,14 +190,14 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutProjectToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.helpToolStripMenuItem.Text = "О проекте";
             // 
             // aboutProjectToolStripMenuItem
             // 
             this.aboutProjectToolStripMenuItem.Name = "aboutProjectToolStripMenuItem";
-            this.aboutProjectToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.aboutProjectToolStripMenuItem.Text = "About project";
+            this.aboutProjectToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.aboutProjectToolStripMenuItem.Text = "О проекте";
             this.aboutProjectToolStripMenuItem.Click += new System.EventHandler(this.aboutProjectToolStripMenuItem_Click);
             // 
             // durationLabel1
@@ -308,7 +310,7 @@
             this.editGroupBox1.Controls.Add(this.editSaveBtn);
             this.editGroupBox1.Location = new System.Drawing.Point(283, 411);
             this.editGroupBox1.Name = "editGroupBox1";
-            this.editGroupBox1.Size = new System.Drawing.Size(613, 237);
+            this.editGroupBox1.Size = new System.Drawing.Size(613, 220);
             this.editGroupBox1.TabIndex = 18;
             this.editGroupBox1.TabStop = false;
             this.editGroupBox1.Text = "Выбрано";
@@ -319,8 +321,18 @@
             this._editMultiTagList.Data = null;
             this._editMultiTagList.Location = new System.Drawing.Point(23, 40);
             this._editMultiTagList.Name = "_editMultiTagList";
-            this._editMultiTagList.Size = new System.Drawing.Size(218, 186);
+            this._editMultiTagList.Size = new System.Drawing.Size(218, 174);
             this._editMultiTagList.TabIndex = 1;
+            // 
+            // duplicateBtn
+            // 
+            this.duplicateBtn.Location = new System.Drawing.Point(249, 114);
+            this.duplicateBtn.Name = "duplicateBtn";
+            this.duplicateBtn.Size = new System.Drawing.Size(94, 23);
+            this.duplicateBtn.TabIndex = 0;
+            this.duplicateBtn.Text = "дубликат";
+            this.duplicateBtn.UseVisualStyleBackColor = true;
+            this.duplicateBtn.Click += new System.EventHandler(this.duplicateBtn_Click);
             // 
             // button10
             // 
@@ -388,16 +400,16 @@
             this.popularGroupBox1.Controls.Add(this.button9);
             this.popularGroupBox1.Controls.Add(this.button16);
             this.popularGroupBox1.Controls.Add(this.button1);
-            this.popularGroupBox1.Location = new System.Drawing.Point(12, 411);
+            this.popularGroupBox1.Location = new System.Drawing.Point(19, 373);
             this.popularGroupBox1.Name = "popularGroupBox1";
-            this.popularGroupBox1.Size = new System.Drawing.Size(249, 312);
+            this.popularGroupBox1.Size = new System.Drawing.Size(249, 280);
             this.popularGroupBox1.TabIndex = 17;
             this.popularGroupBox1.TabStop = false;
             this.popularGroupBox1.Text = "Популярные";
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(10, 281);
+            this.button15.Location = new System.Drawing.Point(128, 134);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(94, 23);
             this.button15.TabIndex = 0;
@@ -413,6 +425,16 @@
             this.button2.TabIndex = 0;
             this.button2.Text = "sex";
             this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button16
+            // 
+            this.button16.BackColor = System.Drawing.Color.Plum;
+            this.button16.Location = new System.Drawing.Point(6, 19);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(98, 23);
+            this.button16.TabIndex = 0;
+            this.button16.Text = "которые любят";
+            this.button16.UseVisualStyleBackColor = false;
             // 
             // dataGridView1
             // 
@@ -430,7 +452,7 @@
             // 
             // btnLoadTagsFromFiles
             // 
-            this.btnLoadTagsFromFiles.Location = new System.Drawing.Point(933, 422);
+            this.btnLoadTagsFromFiles.Location = new System.Drawing.Point(6, 26);
             this.btnLoadTagsFromFiles.Name = "btnLoadTagsFromFiles";
             this.btnLoadTagsFromFiles.Size = new System.Drawing.Size(75, 23);
             this.btnLoadTagsFromFiles.TabIndex = 20;
@@ -440,7 +462,7 @@
             // 
             // btnLoadTagsToFiles
             // 
-            this.btnLoadTagsToFiles.Location = new System.Drawing.Point(933, 460);
+            this.btnLoadTagsToFiles.Location = new System.Drawing.Point(6, 64);
             this.btnLoadTagsToFiles.Name = "btnLoadTagsToFiles";
             this.btnLoadTagsToFiles.Size = new System.Drawing.Size(75, 23);
             this.btnLoadTagsToFiles.TabIndex = 21;
@@ -450,7 +472,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(933, 502);
+            this.btnExport.Location = new System.Drawing.Point(6, 106);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 21;
@@ -491,9 +513,9 @@
             // 
             this._filterMultiTagList.AllowCreateTags = false;
             this._filterMultiTagList.Data = null;
-            this._filterMultiTagList.Location = new System.Drawing.Point(12, 208);
+            this._filterMultiTagList.Location = new System.Drawing.Point(12, 199);
             this._filterMultiTagList.Name = "_filterMultiTagList";
-            this._filterMultiTagList.Size = new System.Drawing.Size(218, 186);
+            this._filterMultiTagList.Size = new System.Drawing.Size(218, 168);
             this._filterMultiTagList.TabIndex = 19;
             // 
             // playedListComboBox
@@ -506,26 +528,6 @@
             this.playedListComboBox.Size = new System.Drawing.Size(231, 21);
             this.playedListComboBox.TabIndex = 25;
             this.playedListComboBox.SelectedIndexChanged += new System.EventHandler(this.playedListComboBox_SelectedIndexChanged);
-            // 
-            // duplicateBtn
-            // 
-            this.duplicateBtn.Location = new System.Drawing.Point(249, 114);
-            this.duplicateBtn.Name = "duplicateBtn";
-            this.duplicateBtn.Size = new System.Drawing.Size(94, 23);
-            this.duplicateBtn.TabIndex = 0;
-            this.duplicateBtn.Text = "дубликат";
-            this.duplicateBtn.UseVisualStyleBackColor = true;
-            this.duplicateBtn.Click += new System.EventHandler(this.duplicateBtn_Click);
-            // 
-            // button16
-            // 
-            this.button16.BackColor = System.Drawing.Color.Plum;
-            this.button16.Location = new System.Drawing.Point(6, 19);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(98, 23);
-            this.button16.TabIndex = 0;
-            this.button16.Text = "которые любят";
-            this.button16.UseVisualStyleBackColor = false;
             // 
             // playingRecordContextMenuStrip1
             // 
@@ -546,7 +548,7 @@
             this.рашаритьЧерезВебсерверToolStripMenuItem,
             this.запуститьВебсерверToolStripMenuItem});
             this.gridContextMenuStrip1.Name = "gridContextMenuStrip1";
-            this.gridContextMenuStrip1.Size = new System.Drawing.Size(235, 70);
+            this.gridContextMenuStrip1.Size = new System.Drawing.Size(235, 48);
             // 
             // рашаритьЧерезВебсерверToolStripMenuItem
             // 
@@ -565,8 +567,7 @@
             // webServerLinkLabel1
             // 
             this.webServerLinkLabel1.AutoSize = true;
-            this.webServerLinkLabel1.LinkVisited = true;
-            this.webServerLinkLabel1.Location = new System.Drawing.Point(286, 702);
+            this.webServerLinkLabel1.Location = new System.Drawing.Point(993, 612);
             this.webServerLinkLabel1.Name = "webServerLinkLabel1";
             this.webServerLinkLabel1.Size = new System.Drawing.Size(0, 13);
             this.webServerLinkLabel1.TabIndex = 28;
@@ -575,26 +576,36 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(286, 668);
+            this.label2.Location = new System.Drawing.Point(922, 612);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Веб-сервер";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnExport);
+            this.groupBox1.Controls.Add(this.btnLoadTagsFromFiles);
+            this.groupBox1.Controls.Add(this.btnLoadTagsToFiles);
+            this.groupBox1.Location = new System.Drawing.Point(925, 419);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(357, 166);
+            this.groupBox1.TabIndex = 29;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Синхронизация и резервное копирование";
+            // 
             // SmartotekaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1324, 787);
+            this.ClientSize = new System.Drawing.Size(1324, 685);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.webServerLinkLabel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.playedListComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.clearFilterNameBtn);
             this.Controls.Add(this.filterTitleTagList1);
-            this.Controls.Add(this.btnExport);
-            this.Controls.Add(this.btnLoadTagsToFiles);
-            this.Controls.Add(this.btnLoadTagsFromFiles);
             this.Controls.Add(this._filterMultiTagList);
             this.Controls.Add(this.editGroupBox1);
             this.Controls.Add(this.popularGroupBox1);
@@ -623,6 +634,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.playingRecordContextMenuStrip1.ResumeLayout(false);
             this.gridContextMenuStrip1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -681,6 +693,7 @@
         private System.Windows.Forms.ToolStripMenuItem запуститьВебсерверToolStripMenuItem;
         private System.Windows.Forms.LinkLabel webServerLinkLabel1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

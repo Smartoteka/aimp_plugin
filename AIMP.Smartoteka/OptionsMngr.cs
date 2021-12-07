@@ -11,7 +11,7 @@
 
     internal static class OptionsMngr
     {
-        private const string AIMP_Smartoteka_config_path = "AIMP.SMARTOTEKA\\STREAM";
+        private const string AIMP_Smartoteka_config_path = "AIMP.SMARTOTEKA\\OPTIONS";
 
         public static void Save(IAimpPlayer player, Options options)
         {

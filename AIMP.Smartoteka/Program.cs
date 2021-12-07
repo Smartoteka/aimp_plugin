@@ -22,7 +22,7 @@
             {
                 IAimpMenuItem menuItem = result.Result as IAimpMenuItem;
 
-                menuItem.Name = "Open smartoteka";
+                menuItem.Name = "Smartoteka";
                 menuItem.Id = "open_smartoteka";
 
                 menuItem.OnExecute += SmartotekaFormItemOnOnExecute;
@@ -59,11 +59,9 @@
             var menuItemResult = Player.Core.CreateAimpObject<IAimpMenuItem>();
             if (menuItemResult.ResultType == ActionResultType.OK)
             {
-                IAimpMenuItem actionMenuItem = Player.Core.CreateAimpObject<IAimpMenuItem>().Result;
-
                 var action = Player.Core.CreateAimpObject<IAimpAction>().Result;
                 action.Id = "aimp.MenuAndActionsSmartoteka.action.1";
-                action.Name = "Open smartoteka";
+                action.Name = "Smartoteka";
                 action.OnExecute += (sender, args) =>
                 {
                     var item = sender as IAimpAction;

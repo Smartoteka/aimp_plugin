@@ -70,6 +70,11 @@
             dataGridView1.RowTemplate.ContextMenuStrip = gridContextMenuStrip1;
 
             filterTitleTagList1.SelectedTag += (s, e) => Filter();
+
+            foreach (var tagBtn in popularGroupBox1.Controls.Cast<Control>().Where(el => el is Button).Cast<Button>())
+            {
+                tagBtn.Click += Tag_Click;
+            }
         }
 
         private HookMessage OnOnCoreMessage()
@@ -166,11 +171,6 @@
             _editMultiTagList.Init();
 
             _filterMultiTagList.UpdateTags += (s, e) => Filter();
-
-            foreach (var tagBtn in popularGroupBox1.Controls.Cast<Control>().Where(el => el is Button).Cast<Button>())
-            {
-                tagBtn.Click += Tag_Click;
-            }
 
             this.filterTitleTagList1.Data = _records
                 .Select(el => el.Item1.Title)

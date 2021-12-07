@@ -100,7 +100,7 @@ namespace AIMP.Smartoteka
             this.Controls.Add(this.tagsListBox1);
             this.Controls.Add(this.clearBtn);
             this.Name = "MultiTagList";
-            this.Size = new System.Drawing.Size(218, 186);
+            this.Size = new System.Drawing.Size(218, 167);
             this.copyMenyStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
