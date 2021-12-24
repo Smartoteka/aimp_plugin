@@ -4,18 +4,18 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
-    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
     using System.Runtime.InteropServices;
     using System.Text;
-    using System.Threading;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Windows.Forms;
     using Autocomplete;
-    using Newtonsoft.Json;
+    using global::Smartoteka.API.Clients;
+    using global::Smartoteka.API.DTOs;
     using SDK;
     using SDK.MessageDispatcher;
     using SDK.Player;
@@ -23,12 +23,17 @@
 
     public partial class SmartotekaForm : Form
     {
+        private const string Version = "0.1.0";
+        private string _baseUrl = "https://localhost:44383/";
+        private SmartotekaAPIClient SmartotekaApiClient => new SmartotekaAPIClient(_baseUrl);
+
         private readonly IAimpPlayer _aimpPlayer;
 
         private List<Tuple<Record, IAimpPlaylistItem>> _records;
         private bool _blockEvents;
         private Options _options;
         private Process _webServer;
+        private bool _optionsNeedToSave;
 
         Options Options
         {
@@ -48,6 +53,8 @@
 
         public SmartotekaForm(IAimpPlayer player, MessageHook coreMessage)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             _aimpPlayer = player;
 
             InitializeComponent();
@@ -88,7 +95,7 @@
                 {
                     //Logger.Instance.AddInfoMessage($"[Event] AimpPlayer.StateChanged: {param1}");
 
-                    switch ((AimpPlayerState) param1)
+                    /*switch ((AimpPlayerState) param1)
                     {
                         case AimpPlayerState.Stopped:
                             toolStripStatusLabel1.Text = "State: stopped";
@@ -99,7 +106,7 @@
                         case AimpPlayerState.Playing:
                             toolStripStatusLabel1.Text = "State: playing";
                             break;
-                    }
+                    }*/
                 }
                 else if (message == AimpCoreMessageType.EventPropertyValue)
                 {
@@ -323,7 +330,8 @@
             _aimpPlayer.IsMute = !_aimpPlayer.IsMute;
         }
 
-        private void PlayerForm_Shown(object sender, EventArgs e)
+
+        private async void PlayerForm_Shown(object sender, EventArgs e)
         {
             _options = OptionsMngr.Load(_aimpPlayer);
 
@@ -356,6 +364,14 @@
             _blockEvents = false;
 
             LoadSelectedList();
+
+            var flags = OptionsMngr.LoadFlags(_aimpPlayer);
+
+            if (flags == null || flags.RequestedDate != DateTime.Today)
+            {
+                await getMessages();
+                OptionsMngr.SaveFlags(_aimpPlayer, new Flags(){RequestedDate = DateTime.Today});
+            }
         }
 
         public void LoadSelectedList()
@@ -451,6 +467,45 @@
                 durationLabel1.Text = "";
                 _editMultiTagList.Selected = commonTagsDict.Keys;
                 editGroupBox1.Visible = true;
+            }
+        }
+
+        private async Task getMessages()
+        {
+            try
+            {
+                var processorId = DeviceInfoManager.getProcessorId();
+                var cId = DeviceInfoManager.getDiskId();
+
+                var compUid = processorId + "_" + cId;
+
+                if (Options.UUID == null)
+                {
+                    var uuid = await AuthorizeManager.getUUID(SmartotekaApiClient, compUid, Version);
+                    if (uuid != null)
+                    {
+                        _options.UUID = uuid;
+
+                        //AIMP api return access denied message if we run in async code
+                        //OptionsMngr.Save(_aimpPlayer, _options)
+                        _optionsNeedToSave = true;
+                        timer1.Start();
+                    }
+                }
+
+                if (Options.UUID == null)
+                    return;
+
+                var response = await SmartotekaApiClient.GetMessagesAsync(
+                    Options.UUID.Value,
+                    compUid,
+                    (int) ProductType.AIMPExt);
+
+                this.toolStripStatusLabel1.Text = response.DisplayMessage;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
         }
 
@@ -603,13 +658,6 @@
             editSaveBtn_Click(editSaveBtn, EventArgs.Empty);
         }
 
-        private void playTrackBar1_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-            }
-        }
-
         private void запуститьВебсерверToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_webServer != null)
@@ -655,7 +703,7 @@
 
         private void webServerLinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(webServerLinkLabel1.Text);
+            Process.Start(((LinkLabel) sender).Text);
         }
 
         private void рашаритьЧерезВебсерверToolStripMenuItem_Click(object sender, EventArgs e)
@@ -687,7 +735,6 @@
 
             foreach (var row in rows)
             {
-                var ulr = webServerLinkLabel1.Text;
 
                 var fileName = (row["FileName"] + "").Substring(Options.WorkingDirectory.Length + 1);
 
@@ -718,6 +765,17 @@
                 {
                     w.Write(sb.ToString());
                 }
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (_optionsNeedToSave)
+            {
+                OptionsMngr.Save(_aimpPlayer, _options);
+                _optionsNeedToSave = false;
+
+                timer1.Stop();
             }
         }
     }

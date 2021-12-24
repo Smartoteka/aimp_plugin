@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIMP.Smartoteka", "AIMP.Smartoteka\AIMP.Smartoteka.csproj", "{BF1E8C14-DCD8-4BDA-AD53-895266CD5AC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIMP.Smartoteka.Tests", "AIMP.Smartoteka.Tests\AIMP.Smartoteka.Tests.csproj", "{DC125404-8525-4BB2-ABBC-587961575322}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartoteka.API.DTOs", "..\Smartoteka.API\Smartoteka.API.DTOs\Smartoteka.API.DTOs.csproj", "{21E3416E-DF30-4401-851D-BB3FD2BE8201}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartoteka.API.Clients", "Smartoteka.API.Clients\Smartoteka.API.Clients.csproj", "{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{BF1E8C14-DCD8-4BDA-AD53-895266CD5AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF1E8C14-DCD8-4BDA-AD53-895266CD5AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF1E8C14-DCD8-4BDA-AD53-895266CD5AC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC125404-8525-4BB2-ABBC-587961575322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC125404-8525-4BB2-ABBC-587961575322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC125404-8525-4BB2-ABBC-587961575322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC125404-8525-4BB2-ABBC-587961575322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21E3416E-DF30-4401-851D-BB3FD2BE8201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21E3416E-DF30-4401-851D-BB3FD2BE8201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21E3416E-DF30-4401-851D-BB3FD2BE8201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21E3416E-DF30-4401-851D-BB3FD2BE8201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

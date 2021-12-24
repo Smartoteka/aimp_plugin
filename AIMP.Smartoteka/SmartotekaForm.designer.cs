@@ -81,6 +81,8 @@
             this.webServerLinkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.playTrackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.soundTrackBar)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -131,7 +133,6 @@
             this.playTrackBar1.Size = new System.Drawing.Size(264, 45);
             this.playTrackBar1.TabIndex = 3;
             this.playTrackBar1.Scroll += new System.EventHandler(this.positionTrackBar1_Scroll);
-            this.playTrackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.playTrackBar1_MouseUp);
             // 
             // soundTrackBar
             // 
@@ -594,11 +595,28 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Синхронизация и резервное копирование";
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(1210, 35);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(102, 13);
+            this.linkLabel1.TabIndex = 30;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "http://smartoteka.ru";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.webServerLinkLabel1_LinkClicked);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // SmartotekaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 685);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.webServerLinkLabel1);
             this.Controls.Add(this.label2);
@@ -694,6 +712,8 @@
         private System.Windows.Forms.LinkLabel webServerLinkLabel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

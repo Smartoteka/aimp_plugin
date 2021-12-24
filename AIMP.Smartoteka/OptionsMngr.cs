@@ -12,8 +12,33 @@
     internal static class OptionsMngr
     {
         private const string AIMP_Smartoteka_config_path = "AIMP.SMARTOTEKA\\OPTIONS";
+        private const string AIMP_Smartoteka_flags_path = "AIMP.SMARTOTEKA\\FLAGS";
 
         public static void Save(IAimpPlayer player, Options options)
+        {
+            Save(player, options, AIMP_Smartoteka_config_path);
+        }
+
+        public static Options Load(IAimpPlayer player)
+        {
+            Options records = Load<Options>(player, AIMP_Smartoteka_config_path);
+
+            return records;
+        }
+
+        public static void SaveFlags(IAimpPlayer player, Flags options)
+        {
+            Save(player, options, AIMP_Smartoteka_flags_path);
+        }
+
+        public static Flags LoadFlags(IAimpPlayer player)
+        {
+            var records = Load<Flags>(player, AIMP_Smartoteka_flags_path);
+
+            return records;
+        }
+
+        private static void Save(IAimpPlayer player, object options, string path)
         {
             var value = OptionsMngr.ToJson(options);
 
@@ -21,16 +46,17 @@
             {
                 var buf = System.Text.Encoding.UTF8.GetBytes(value);
                 stream.Write(buf, buf.Length, out int written);
-                player.ServiceConfig.SetValueAsStream(AIMP_Smartoteka_config_path, stream);
+
+                var result = player.ServiceConfig.SetValueAsStream(path, stream);
             }
         }
 
-        public static Options Load(IAimpPlayer player)
+        static T Load<T>(IAimpPlayer player, string path)
         {
-            Options records = null;
+            T records = default(T);
             try
             {
-                var streamResult = player.ServiceConfig.GetValueAsStream(AIMP_Smartoteka_config_path);
+                var streamResult = player.ServiceConfig.GetValueAsStream(path);
 
                 if (streamResult.ResultType == ActionResultType.OK)
                 {
@@ -44,7 +70,7 @@
                         var stringReader = new StringReader(strData);
                         var jsonTextReader = new JsonTextReader(stringReader);
 
-                        records = JsonSerializer.Create().Deserialize<Options>(jsonTextReader);
+                        records = JsonSerializer.Create().Deserialize<T>(jsonTextReader);
                     }
                 }
             }

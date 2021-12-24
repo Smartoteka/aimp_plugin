@@ -40,8 +40,12 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.CodeDom, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CodeDom.6.0.0\lib\net461\System.CodeDom.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -59,10 +63,13 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AuthorizeManager.cs" />
     <Compile Include="CacheMngr.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="DeviceInfoManager.cs" />
     <Compile Include="ExtensionPlaylistManagerListener.cs" />
     <Compile Include="FilterByTags.cs" />
+    <Compile Include="Flags.cs" />
     <Compile Include="MessageHook.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="OptionsForm.cs">
@@ -123,6 +130,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Smartoteka.API\Smartoteka.API.DTOs\Smartoteka.API.DTOs.csproj">
+      <Project>{21E3416E-DF30-4401-851D-BB3FD2BE8201}</Project>
+      <Name>Smartoteka.API.DTOs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smartoteka.API.Clients\Smartoteka.API.Clients.csproj">
+      <Project>{A8EC4AFF-1CF5-4877-9FCF-74FF8CA9B4F0}</Project>
+      <Name>Smartoteka.API.Clients</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
