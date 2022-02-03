@@ -34,17 +34,24 @@
         private Options _options;
         private Process _webServer;
         private bool _optionsNeedToSave;
+        private ExtensionPlaylistManagerListener _listner;
 
         Options Options
         {
             get
             {
                 while (_options == null
-                       || string.IsNullOrEmpty(_options.ExportPath)
-                       || string.IsNullOrEmpty(_options.CacheTagsPath)
-                       || string.IsNullOrEmpty(_options.WorkingDirectory))
+                       || string.IsNullOrEmpty(_options.CacheTagsPath))
                 {
-                    optionsToolStripMenuItem_Click(this, EventArgs.Empty);
+                    var cachePath = Path.Combine(_aimpPlayer.Core.GetPath(AimpCorePathType.Profile), "smart");
+
+                    if (!Directory.Exists(cachePath))
+                        Directory.CreateDirectory(cachePath);
+
+                    _options = new Options()
+                    {
+                        CacheTagsPath = cachePath
+                    };
                 }
 
                 return _options;
@@ -82,6 +89,29 @@
             {
                 tagBtn.Click += Tag_Click;
             }
+
+            _listner = new ExtensionPlaylistManagerListener();
+            _listner.Activated += (s, e) => { SetSelectPlayList(e.Playlist.Name); };
+            _listner.Added += (s, e) =>
+            {
+                var list = (List<string>) this.playedListComboBox.DataSource;
+                list.Add(e.Playlist.Name);
+
+                this.playedListComboBox.DataSource = null;
+                this.playedListComboBox.DataSource = list;
+            };
+            _listner.Removed += (s, e) =>
+            {
+                SetSelectPlayList(e.Playlist.Name);
+
+                var list = (List<string>) this.playedListComboBox.DataSource;
+                list.Remove(e.Playlist.Name);
+
+                this.playedListComboBox.DataSource = null;
+                this.playedListComboBox.DataSource = list;
+            };
+
+            _aimpPlayer.Core.RegisterExtension(_listner);
         }
 
         private HookMessage OnOnCoreMessage()
@@ -135,6 +165,9 @@
                 }
                 else if (message == AimpCoreMessageType.EventPlayerUpdatePosition)
                 {
+                    if (_aimpPlayer.Duration < _aimpPlayer.Position)
+                        return ActionResultType.OK;
+
                     playTrackBar1.Maximum = (int) _aimpPlayer.Duration;
                     playTrackBar1.Value = (int) _aimpPlayer.Position;
                 }
@@ -161,6 +194,10 @@
 
         public new void Dispose()
         {
+            if (_listner != null)
+                _aimpPlayer.Core.UnregisterExtension(_listner);
+            _listner = null;
+
             base.Dispose();
         }
 
@@ -263,6 +300,14 @@
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(Options.ExportPath))
+            {
+                optionsToolStripMenuItem_Click(this, EventArgs.Empty);
+
+                if (string.IsNullOrEmpty(Options.ExportPath))
+                    return;
+            }
+
             var records = _records.Select(el => el.Item1).ToList();
 
             var path =
@@ -333,7 +378,7 @@
 
         private async void PlayerForm_Shown(object sender, EventArgs e)
         {
-            _options = OptionsMngr.Load(_aimpPlayer);
+            //_options = OptionsMngr.Load(_aimpPlayer);
 
             soundTrackBar.Maximum = 100;
             soundTrackBar.Value = (int) (_aimpPlayer.Volume * 100);
@@ -354,12 +399,15 @@
             names = names.OrderBy(el => el).ToList();
             this.playedListComboBox.DataSource = names;
 
-            if (!string.IsNullOrEmpty(Options.CurrentListName))
+            var currentListName = Options.CurrentListName;
+
+            var activePlayList = _aimpPlayer.ServicePlaylistManager.GetActivePlaylist();
+            if (activePlayList.ResultType == ActionResultType.OK)
             {
-                var selectedIndex = names.IndexOf(Options.CurrentListName);
-                if (selectedIndex < 0)
-                    this.playedListComboBox.SelectedIndex = selectedIndex;
+                currentListName = activePlayList.Result.Name;
             }
+
+            SetSelectPlayList(currentListName);
 
             _blockEvents = false;
 
@@ -370,7 +418,17 @@
             if (flags == null || flags.RequestedDate != DateTime.Today)
             {
                 await getMessages();
-                OptionsMngr.SaveFlags(_aimpPlayer, new Flags(){RequestedDate = DateTime.Today});
+                OptionsMngr.SaveFlags(_aimpPlayer, new Flags() {RequestedDate = DateTime.Today});
+            }
+        }
+
+        private void SetSelectPlayList(string currentListName)
+        {
+            if (!string.IsNullOrEmpty(currentListName))
+            {
+                var selectedIndex = ((List<string>) this.playedListComboBox.DataSource).IndexOf(currentListName);
+                if (selectedIndex >= 0)
+                    this.playedListComboBox.SelectedIndex = selectedIndex;
             }
         }
 
@@ -472,7 +530,7 @@
 
         private async Task getMessages()
         {
-            try
+            /*try
             {
                 var processorId = DeviceInfoManager.getProcessorId();
                 var cId = DeviceInfoManager.getDiskId();
@@ -506,7 +564,7 @@
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-            }
+            }*/
         }
 
         private void editSaveBtn_Click(object sender, EventArgs e)
@@ -660,6 +718,14 @@
 
         private void запуститьВебсерверToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(Options.WorkingDirectory))
+            {
+                optionsToolStripMenuItem_Click(this, EventArgs.Empty);
+
+                if (string.IsNullOrEmpty(Options.WorkingDirectory))
+                    return;
+            }
+
             if (_webServer != null)
             {
                 _webServer.Close();
@@ -708,6 +774,14 @@
 
         private void рашаритьЧерезВебсерверToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(Options.WorkingDirectory))
+            {
+                optionsToolStripMenuItem_Click(this, EventArgs.Empty);
+
+                if (string.IsNullOrEmpty(Options.WorkingDirectory))
+                    return;
+            }
+
             var rows = this.SelectedRows();
 
             var sb = new StringBuilder();
