@@ -61,7 +61,7 @@
 
         public override void Dispose()
         {
-            _smartotkeraForm.Dispose();
+            _smartotkeraForm?.Dispose();
             System.Diagnostics.Debug.WriteLine("Dispose");
 
             Player.ServiceMessageDispatcher.Unhook(_hook);
